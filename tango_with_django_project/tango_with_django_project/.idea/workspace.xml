@@ -86,7 +86,7 @@
       <file leaf-file-name="admin.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../rango/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="35" selection-start="223" selection-end="223" vertical-scroll-proportion="0.2567237" vertical-offset="0" max-vertical-offset="409">
+            <state line="7" column="14" selection-start="202" selection-end="202" vertical-scroll-proportion="0.2567237" vertical-offset="0" max-vertical-offset="409">
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -162,6 +162,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager" selected="Django server.tango_with_django_project">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -459,7 +460,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../rango/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="35" selection-start="223" selection-end="223" vertical-scroll-proportion="0.2567237" vertical-offset="0" max-vertical-offset="409">
+        <state line="7" column="14" selection-start="202" selection-end="202" vertical-scroll-proportion="0.2567237" vertical-offset="0" max-vertical-offset="409">
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
