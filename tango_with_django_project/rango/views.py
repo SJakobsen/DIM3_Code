@@ -249,6 +249,11 @@ def add_page(request, category_name_url):
             {'category_name_url': category_name_url,
              'category_name': category_name, 'form': form},
              context)
+@login_required             
+def restricted(request):
+    context = RequestContext(request)
+    context_dict = {}
+    return render_to_response('rango/restricted.html', context_dict, context)
 
 def about(request):
     context = RequestContext(request)
