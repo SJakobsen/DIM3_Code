@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -19,20 +21,31 @@ def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
     
     page_list = Page.objects.order_by('-views')[:5]
-
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    context_dict = {'categories': category_list,
-                    'pages': page_list}
     
     # We loop through each category returned, and create a URL attribute.
     # This attribute stores an encoded URL (e.g. spaces replaced with underscores).
     for category in category_list:
         category.url = category.name.replace(' ', '_')
 
-    # Return a rendered response to send to the client.
-    # We make use of the shortcut function to make our lives easier.
-    # Note that the first parameter is the template we wish to use.
+    # Construct a dictionary to pass to the template engine as its context.
+    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
+    context_dict = {'categories': category_list,
+                    'pages': page_list}
+
+    if request.session.get('last_visit'):
+        # The session has a value for the last visit
+        last_visit_time = request.session.get('last_visit')
+        visits = request.session.get('visits', 0)
+
+        if (datetime.now() - datetime.strptime(last_visit_time[:-7], "%Y-%m-%d %H:%M:%S")).days > 0:
+            request.session['visits'] = visits + 1
+            request.session['last_visit'] = str(datetime.now())
+    else:
+        # The get returns None, and the session does not have a value for the last visit.
+        request.session['last_visit'] = str(datetime.now())
+        request.session['visits'] = 1
+
+    # Render and return the rendered response back to the user.
     return render_to_response('rango/index.html', context_dict, context)
     
 def register(request):
@@ -249,6 +262,7 @@ def add_page(request, category_name_url):
             {'category_name_url': category_name_url,
              'category_name': category_name, 'form': form},
              context)
+             
 @login_required             
 def restricted(request):
     context = RequestContext(request)
@@ -257,8 +271,15 @@ def restricted(request):
 
 def about(request):
     context = RequestContext(request)
-    context_dict = {}
-    return render_to_response('rango/about.html', context_dict, context)
+    
+    # If the visits session varible exists, take it and use it.
+    # If it doesn't, we haven't visited the site so set the count to zero.
+    if request.session.get('visits'):
+        count = request.session.get('visits')
+    else:
+        count = 0
+        
+    return render_to_response('rango/about.html', {'count': count}, context)
     
 def decode_url(url):
     url = url.replace('_', ' ')

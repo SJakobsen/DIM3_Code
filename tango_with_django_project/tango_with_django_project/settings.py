@@ -1,5 +1,8 @@
 # Django settings for tango_with_django_project project.
 import os
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
 SETTINGS_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
